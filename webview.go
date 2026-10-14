@@ -74,6 +74,12 @@ type WebViewOptions struct {
 	// browser instance.
 	DataPath string
 
+	// AdditionalBrowserArguments are extra command-line switches for the
+	// browser process, passed through ICoreWebView2EnvironmentOptions. The
+	// WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS environment variable, if set,
+	// takes precedence.
+	AdditionalBrowserArguments string
+
 	// AutoFocus will try to keep the WebView2 widget focused when the window
 	// is focused.
 	AutoFocus bool
@@ -102,6 +108,7 @@ func NewWithOptions(options WebViewOptions) WebView {
 	chromium := edge.NewChromium()
 	chromium.MessageCallback = w.msgcb
 	chromium.DataPath = options.DataPath
+	chromium.AdditionalBrowserArguments = options.AdditionalBrowserArguments
 	chromium.SetPermission(edge.CoreWebView2PermissionKindClipboardRead, edge.CoreWebView2PermissionStateAllow)
 
 	w.browser = chromium
